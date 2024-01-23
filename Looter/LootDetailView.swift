@@ -8,11 +8,14 @@
 import SwiftUI
 
 struct LootDetailView: View {
+    @State var item: LootItem
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        LootDetailImageView(item: item)
+        LootDetailListView(item: item)
     }
 }
 
 #Preview {
-    LootDetailView()
+    LootDetailView(item: items[5])
 }

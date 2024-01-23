@@ -8,18 +8,24 @@
 import Foundation
 import SwiftUI
 
-struct lookItemView: View {
-    @State var name: String = ""
-    @State var type: ItemType = .unknown
-    @State var rarity: Rarity = .common
-    @State var attackStrength: Int = 0
-    @State var game: Game = .common
-    
-    var body: some View {
-        return
-    }
-    
+struct LootItem : Identifiable, Hashable {
+    var id = UUID()
+    var quantity: Int = 1
+    var name: String
+    var type: ItemType
+    var rarity: Rarity
+    var attackStrength: Int?
+    var game: Game
 }
+
+let items: [LootItem] = [
+    LootItem(name: "Magic Wand", type: .magic, rarity: .common, attackStrength: 5, game: randomGame()),
+    LootItem(name: "Steel Armor", type: .poison, rarity: .uncommon, attackStrength: nil, game: randomGame()),
+    LootItem(name: "Fire Sword", type: .thunder, rarity: .rare, attackStrength: 15, game: randomGame()),
+    LootItem(name: "Health Potion", type: .ice, rarity: .common, attackStrength: nil, game: randomGame()),
+    LootItem(name: "Amulet of Power", type: .unknown, rarity: .epic, attackStrength: 30, game: randomGame()),
+    LootItem(name: "Swift Boots", type: .wind, rarity: .uncommon, attackStrength: nil, game: availableGames[5]),
+]
 
 enum ItemType: CaseIterable {
     case magic
