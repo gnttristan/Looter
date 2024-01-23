@@ -48,7 +48,7 @@ struct ContentView: View {
                 )
             }
         }
-        .frame(height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/)
+        .frame(height: 200)
     }
 }
 
