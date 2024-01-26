@@ -11,6 +11,7 @@ class Inventory: ObservableObject {
 
 struct ContentView: View {
     @StateObject var inventory = Inventory()
+    @AppStorage("isOnboardingDone") var isOnboardingDone: Bool = false
     
     @State var showAddItemView = false
     
@@ -38,6 +39,13 @@ struct ContentView: View {
                         Image(systemName: "plus.circle.fill")
                     })
                 }
+                ToolbarItem {
+                    Button(action: {
+                        isOnboardingDone = false
+                    }, label: {
+                        Image(systemName: "xmark.square.fill")
+                    })
+                }
             })
         }
         Chart{
@@ -48,10 +56,10 @@ struct ContentView: View {
                 )
             }
         }
-        .frame(height: 200)
+        .frame(height: 200)	
     }
 }
 
-#Preview {
-    ContentView()
-}
+//#Preview {
+//    ContentView()
+//}
