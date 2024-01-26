@@ -8,14 +8,30 @@
 import SwiftUI
 
 struct LootDetailView: View {
-    @State var item: LootItem
+    var item: LootItem
+    @EnvironmentObject var inventory: Inventory
     
     var body: some View {
-        LootDetailImageView(item: item)
-        LootDetailListView(item: item)
+        NavigationStack {
+            LootDetailImageView(item: item)
+            LootDetailListView(item: item)
+        }.navigationBarItems(trailing: NavigationLink(destination: EditItemView(
+            name: item.name,
+            type: item.type,
+            rarity: item.rarity,
+            quantity: item.quantity,
+            isAttack: item.attackStrength != nil,
+            attackStrength: item.attackStrength,
+            game: item.game,
+            editAction: EditItemView.EditAction.edit,
+            idToEdit: item.id
+        ).environmentObject(inventory)
+        ) {
+            Text("Edit")
+        })
     }
 }
 
-#Preview {
-    LootDetailView(item: items[5])
-}
+//#Preview {
+//    LootDetailView(item: items[5])
+//}

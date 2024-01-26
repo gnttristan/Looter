@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AddItemView: View {
+struct EditItemView: View {
     @EnvironmentObject var inventory: Inventory
     @Environment(\.dismiss) private var dismiss
     @State var name: String = ""
@@ -18,9 +18,26 @@ struct AddItemView: View {
     @State var attackStrength: Int?
     @State var game: Game = randomGame()
     @State var errors: [String] = []
+    @State var editAction: EditAction
+    
+    var idToEdit: UUID?
+       
+    enum EditAction {
+        case add
+        case edit
+        
+        var title: String {
+            switch self {
+            case .add:
+                return "Ajouter un loot"
+            case .edit:
+                return "Modifier ce loot"
+            }
+        }
+    }
     
     var body: some View {
-        Text("Ajouter un loot")
+        Text(editAction.title)
             .font(.headline)
             .padding()
             .frame(maxWidth: .infinity, alignment: .center)
@@ -74,37 +91,27 @@ struct AddItemView: View {
                 }
             }
 
-            Button(action: {
-                addItem()
-            }, label: {
-                Text("Ajouter l'objet")
-            })
+            if editAction == EditAction.add {
+                Button(action: {
+                    addItem()
+                }, label: {
+                    Text("Ajouter l'objet")
+                })
+            }
+            if editAction == EditAction.edit {
+                Button(action: {
+                    editItem()
+                }, label: {
+                    Text("Modifier l'objet")
+                })
+            }
         }
         
         FormAddItemErrorView(errors: self.$errors)
     }
     
     func addItem() {
-    var errors: [String] = []
-        if name.count < 3 {
-            errors.append("Le nom doit contenir au moins 3 élements")
-        }
-        if name.isEmpty {
-            errors.append("Le nom ne doit pas être vide")
-        }
-        if type == .unknown{
-            errors.append("Le type ne doit pas être unknown")
-        }
-        if game == .emptyGame {
-            errors.append("Le jeu ne doit pas être EmptyGame")
-        }
-        
-        self.errors = errors
-        if self.errors.count != 0 {
-            print(self.errors)
-            return
-        }
-
+        checkConstraints()
         
         inventory.addItem(item: LootItem(
             quantity: quantity, 
@@ -117,9 +124,49 @@ struct AddItemView: View {
         )
         dismiss()
     }
+    
+    func editItem() {
+        checkConstraints()
+        
+        inventory.editItem(
+            id: idToEdit!,
+            item:
+                LootItem(
+                    quantity: quantity,
+                    name: name,
+                    type: type,
+                    rarity: rarity,
+                    attackStrength: attackStrength,
+                    game: game
+                    )
+        )
+        dismiss()
+    }
+    
+    func checkConstraints() {
+        var errors: [String] = []
+            if name.count < 3 {
+                errors.append("Le nom doit contenir au moins 3 élements")
+            }
+            if name.isEmpty {
+                errors.append("Le nom ne doit pas être vide")
+            }
+            if type == .unknown{
+                errors.append("Le type ne doit pas être unknown")
+            }
+            if game == .emptyGame {
+                errors.append("Le jeu ne doit pas être EmptyGame")
+            }
+            
+            self.errors = errors
+            if self.errors.count != 0 {
+                print(self.errors)
+                return
+            }
+    }
 }
 
 #Preview {
-    AddItemView(name: "namePreview", rarity: .common, game: randomGame())
+    EditItemView(name: "namePreview", rarity: .common, game: randomGame(), editAction: EditItemView.EditAction.add)
 }
     

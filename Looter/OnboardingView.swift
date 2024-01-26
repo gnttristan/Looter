@@ -20,8 +20,7 @@ struct OnboardingView: View {
                 buttonString: ButtonType.next,
                 buttonAction: { selectedTab = 1 },
                 backgroundColor: Color.blue
-            )
-            .tag(0)
+            ).tag(0)
         
             OnboardingPageView(
                 titre: "Votre wishlist",
@@ -30,11 +29,9 @@ struct OnboardingView: View {
                 buttonString: ButtonType.next,
                 buttonAction: {
                     selectedTab = 2
-                    print("VA ICI")
                 },
                 backgroundColor: Color.purple
-            )
-            .tag(1)
+            ).tag(1)
         
             OnboardingPageView(
                 titre: "En un coup d'wand.and.starsoeil",
@@ -45,8 +42,7 @@ struct OnboardingView: View {
                     isOnboardingDone = true
                 },
                 backgroundColor: Color.yellow
-            )
-            .tag(2)
+            ).tag(2)
         }
         .tabViewStyle(PageTabViewStyle())
     }

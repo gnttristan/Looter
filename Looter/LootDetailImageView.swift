@@ -10,7 +10,7 @@ import SwiftUI
 
 
 struct LootDetailImageView: View {
-    @State var item: LootItem
+    var item: LootItem
     @State private var rotate: Bool = false
     @State private var shadowed: Bool = false
     @State private var onImageClick: Bool = false

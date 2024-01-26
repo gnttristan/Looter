@@ -20,18 +20,25 @@ struct OnboardingPageView: View {
             Text(titre)
                 .bold()
                 .font(.largeTitle)
-            Image(image)
+            Image(systemName: image)
                 .resizable()
-                .background(backgroundColor)
-                .frame(width: 100, height: 100)
                 .aspectRatio(contentMode: .fit)
-                .cornerRadius(50)
+                .frame(width: 200, height: 200)
+                .padding(30)
+                .background(Circle().fill(backgroundColor))
+                .foregroundColor(.white)
             Text(description)
+                .font(.body)
+                .padding(30)
             Button(action: {
                 buttonAction()
             }) {
                 Text(buttonString.buttonText)
-            }
+            }   .padding()
+                .frame(width: 250, height: 40)
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(10)
         }
     }
 }
